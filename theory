@@ -1,0 +1,84 @@
+		TERRAFORM
+		
+Terraform is an infrastructure as code (IaC) tool that allows you to build, change, and version infrastructure safely and efficiently. 
+This includes both low-level components like compute instances, storage, and networking, as well as high-level components like DNS entries and SaaS features.
+Terraform is a opensource tool.Terraform is a HCL-Declarative Language. 
+
+Terraform has three phases:
+
+1. init phase
+  During init phase, terraform initializes the project and identifies the providers to be used for the target environment.
+2. plan phase
+  During plan phase, terraform drafts the plan to get to the target state.
+3. apply phase 
+  During apply phase, terraform makes the necessary changes required on the environment to bring it to the desired state.
+  if for some reason the environment wants to shift from the desired state, then the subsequent terraform apply bring back to its desired state by only fixing the missing component.
+  
+ - every obeject that terraform manages is called resource, it may be compute instance, db instance, etc
+ - Terraform records the state of the infrastructure as it seen in the real world and based on this it can determine the what action has to be taken on a particular platform
+ - The state is the blue print of the infrastructure deployed by the terraform.
+ - Terraform can be import files from the outside of terraform that may be created manually or may be from other IaC tools and bring it under its control.
+ 
+ Main commands:
+  init          Prepare your working directory for other commands
+  validate      Check whether the configuration is valid
+  plan          Show changes required by the current configuration
+  apply         Create or update infrastructure
+  destroy       Destroy previously-created infrastructure
+
+All other commands:
+  console       Try Terraform expressions at an interactive command prompt
+  fmt           Reformat your configuration in the standard style
+  force-unlock  Release a stuck lock on the current workspace
+  get           Install or upgrade remote Terraform modules
+  graph         Generate a Graphviz graph of the steps in an operation
+  import        Associate existing infrastructure with a Terraform resource
+  login         Obtain and save credentials for a remote host
+  logout        Remove locally-stored credentials for a remote host
+  output        Show output values from your root module
+  providers     Show the providers required for this configuration
+  refresh       Update the state to match remote systems
+  show          Show the current state or a saved plan
+  state         Advanced state management
+  taint         Mark a resource instance as not fully functional
+  untaint       Remove the 'tainted' state from a resource instance
+  version       Show the current Terraform version
+  workspace     Workspace management
+  
+Basic Terraform syntax:
+
+<block> <parameters> {
+   key1 = value1
+   key2 = value2
+}
+
+<block> : Block in Terraform consists of info of infrastructure platform and the set of resourses within that platform that you want to create.
+<parameters>: we will have resourcetype and resource name
+
+basic file example:
+
+resource "local_file" "pet"{				//where resource means block name, "local_file" is ResourceType >>local is provider >>file is resource  , "pet"  means resource name
+  filename = "D:\git\TF\pets.txt"
+  content = "We love pets"					// filename and content are arguments , here filename is pets.txt and content is info inside the pets.txt file.
+}
+
+
+example of basic ec2 instance:
+ 
+resource "aws_instance" "webserver" {
+   ami = "ami_ID"
+   instance_type = "t2.micro"
+}
+
+example of basic aws s3 bucket:
+
+resource "aws_s3_bucket" "data" {
+   bucket = "webserver-bucket-org"
+   acl = "private"
+}
+
+>> terraform init
+>> terraform plan
+>> terraform apply
+
+
